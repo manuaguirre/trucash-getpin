@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <body>
+
+  Token: <input id="token-id"/>
+  Password: <input id="pwd"/>
+  <button onclick="getPin()">Get Pin</button>
+  <script>
+    function getPin() {
+      const token = document.getElementById("token-id").value
+      const password = document.getElementById("pwd").value
+
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+      let urlencoded = new URLSearchParams();
+      urlencoded.append("token", token);
+      urlencoded.append("corrId", "1097427548040");
+      urlencoded.append("userid", "wsNextBank9162");
+      urlencoded.append("password", password);
+      
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: 'follow'
+      };
+
+      fetch("https://ws2.trucash.com:452/cardserviceV2.asmx/GetPIN", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+    }
+  </script>
+
+  </body>
+</html>
