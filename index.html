@@ -3,32 +3,25 @@
   <body>
 
   Token: <input id="token-id"/>
-  Password: <input id="pwd"/>
   <button onclick="getPin()">Get Pin</button>
+  <br/>
+  <br/>
+  <p id="pin-value"></p>
   <script>
     function getPin() {
       const token = document.getElementById("token-id").value
-      const password = document.getElementById("pwd").value
 
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-      let urlencoded = new URLSearchParams();
-      urlencoded.append("token", token);
-      urlencoded.append("corrId", "1097427548040");
-      urlencoded.append("userid", "wsNextBank9162");
-      urlencoded.append("password", password);
-      
+      // myHeaders.append("Access-Control-Allow-Origin", "*");
       var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: urlencoded,
+        method: 'GET',
         redirect: 'follow'
       };
 
-      fetch("https://ws2.trucash.com:452/cardserviceV2.asmx/GetPIN", requestOptions)
+      fetch("https://trucash-server.herokuapp.com/getpin/?token=" + token, requestOptions)
       .then(response => response.text())
-      .then(result => console.log(result))
+      .then((result) => {
+        document.getElementById('pin-value').innerHTML = result.pin
+      })
       .catch(error => console.log('error', error));
     }
   </script>
