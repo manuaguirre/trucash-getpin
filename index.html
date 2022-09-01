@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
   <body>
-
   Token: <input id="token-id"/>
   <button onclick="getPin()">Get Pin</button>
   <br/>
   <br/>
-  <p id="pin-value"></p>
+  PIN: <span id="pin-value"></span>
   <script>
     function getPin() {
       const token = document.getElementById("token-id").value
@@ -20,7 +19,8 @@
       fetch("https://trucash-server.herokuapp.com/getpin/?token=" + token, requestOptions)
       .then(response => response.text())
       .then((result) => {
-        document.getElementById('pin-value').innerHTML = result.pin
+        const pin = JSON.parse(result).pin
+        document.getElementById('pin-value').innerHTML = pin
       })
       .catch(error => console.log('error', error));
     }
